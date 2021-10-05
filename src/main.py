@@ -18,36 +18,33 @@ def spawn():
             w.data[row][col] = doodle()
             doodleCount += 1
 
+def executeMove(row, col):
+    w.data[row][col] = w.data[row][col]
+    w.data[row][col].move()
+    w.data[row][col].incrementBreedCounter()
+
 def move(row, col):
     if w.data[row][col] != " . " and w.data[row][col].didMove() == False:
         # 1=right, 2=down, 3=left, 4=up
         whichWay = r.randint(1,4)
         if whichWay == 1:
             if col < w.size - 1 and w.data[row][col+1] == " . ":
-                w.data[row][col+1] = w.data[row][col]
-                w.data[row][col+1].move()
-                w.data[row][col+1].incrementBreedCounter()
+                executeMove(row, col+1)
                 w.data[row][col] = " . " 
                 breed(row, col+1)
         elif whichWay == 2:
             if row < w.size - 1 and w.data[row+1][col] == " . ":
-                w.data[row+1][col] = w.data[row][col]
-                w.data[row+1][col].move()
-                w.data[row+1][col].incrementBreedCounter()
+                executeMove(row+1, col)
                 w.data[row][col] = " . " 
                 breed(row+1, col)
         elif whichWay == 3:
             if col > 0 and w.data[row][col-1] == " . ":
-                w.data[row][col-1] = w.data[row][col]
-                w.data[row][col-1].move()
-                w.data[row][col-1].incrementBreedCounter()
+                executeMove(row, col-1)
                 w.data[row][col] = " . " 
                 breed(row, col-1)
         elif whichWay == 4:
             if row > 0 and w.data[row-1][col] == " . ":
-                w.data[row-1][col] = w.data[row][col]
-                w.data[row-1][col].move()
-                w.data[row-1][col].incrementBreedCounter()
+                executeMove(row-1, col)
                 w.data[row][col] = " . " 
                 breed(row-1, col)
 

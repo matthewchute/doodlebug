@@ -59,23 +59,15 @@ def breed(row, col):
         if whichWay == 1:
             if col < w.size - 1 and w.data[row][col+1] == " . ":
                 w.data[row][col+1] = breedWhich(w.data[row][col])
-            else:
-                print("cant breed")
         elif whichWay == 2:
             if row < w.size - 1 and w.data[row+1][col] == " . ":
                 w.data[row+1][col] = breedWhich(w.data[row][col])
-            else:
-                print("cant breed")
         elif whichWay == 3:
             if col > 0 and w.data[row][col-1] == " . ":
                 w.data[row][col-1] = breedWhich(w.data[row][col])
-            else:
-                print("cant breed")
         elif whichWay == 4:
             if row > 0 and w.data[row-1][col] == " . ":
                 w.data[row-1][col] = breedWhich(w.data[row][col])
-            else:
-                print("cant breed")
 
 def breedWhich(obj):
     if obj.getType() == " A ":

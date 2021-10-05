@@ -26,43 +26,83 @@ def move(row, col):
             if col < w.size - 1 and w.data[row][col+1] == " . ":
                 w.data[row][col+1] = w.data[row][col]
                 w.data[row][col+1].move()
+                w.data[row][col+1].incrementBreedCounter()
                 w.data[row][col] = " . " 
+                breed(row, col+1)
         elif whichWay == 2:
             if row < w.size - 1 and w.data[row+1][col] == " . ":
                 w.data[row+1][col] = w.data[row][col]
                 w.data[row+1][col].move()
+                w.data[row+1][col].incrementBreedCounter()
                 w.data[row][col] = " . " 
+                breed(row+1, col)
         elif whichWay == 3:
             if col > 0 and w.data[row][col-1] == " . ":
                 w.data[row][col-1] = w.data[row][col]
                 w.data[row][col-1].move()
+                w.data[row][col-1].incrementBreedCounter()
                 w.data[row][col] = " . " 
+                breed(row, col-1)
         elif whichWay == 4:
             if row > 0 and w.data[row-1][col] == " . ":
                 w.data[row-1][col] = w.data[row][col]
                 w.data[row-1][col].move()
+                w.data[row-1][col].incrementBreedCounter()
                 w.data[row][col] = " . " 
-        else:
-            w.data[row][col].move()
+                breed(row-1, col)
 
-def resetMove():
+def breed(row, col):
+    if w.data[row][col].shouldBreed() == True:
+        w.data[row][col].resetBreedCounter()
+        # 1=right, 2=down, 3=left, 4=up
+        whichWay = r.randint(1,4)
+        if whichWay == 1:
+            if col < w.size - 1 and w.data[row][col+1] == " . ":
+                w.data[row][col+1] = breedWhich(w.data[row][col])
+            else:
+                print("cant breed")
+        elif whichWay == 2:
+            if row < w.size - 1 and w.data[row+1][col] == " . ":
+                w.data[row+1][col] = breedWhich(w.data[row][col])
+            else:
+                print("cant breed")
+        elif whichWay == 3:
+            if col > 0 and w.data[row][col-1] == " . ":
+                w.data[row][col-1] = breedWhich(w.data[row][col])
+            else:
+                print("cant breed")
+        elif whichWay == 4:
+            if row > 0 and w.data[row-1][col] == " . ":
+                w.data[row-1][col] = breedWhich(w.data[row][col])
+            else:
+                print("cant breed")
+
+def breedWhich(obj):
+    if obj.getType() == " A ":
+        return ant(moved = True)
+    else:
+        return doodle(moved = True)
+        
+def reset():
     for row in range(w.size):
         for col in range(w.size):
             if w.data[row][col] != " . ":
-                w.data[row][col].rest()
+                w.data[row][col].resetMoved()
 
-def nextStep():
+def nextStep(step):
     for r in range(w.size):
         for c in range(w.size):
             move(r, c)
-    resetMove()
-    w.printWorld()
+    reset()
+    w.printWorld(step)
             
 if __name__ == "__main__":
+    stepCounter = 0
     w = world()
     spawn()
-    w.printWorld()
+    w.printWorld(stepCounter)
     while True:
         _ = raw_input()
-        nextStep()
+        stepCounter += 1
+        nextStep(stepCounter)
 

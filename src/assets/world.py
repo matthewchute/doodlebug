@@ -5,7 +5,8 @@ class world:
         self.numDoodle = 1
         self.data = [[" . " for i in range(self.size)] for j in range(self.size)]
     
-    def printWorld(self):
+    def printWorld(self, step):
+        print "Step Number: " + str(step)
         for i in range(self.size):
             for j in range(self.size):
                 if self.data[i][j] == " . ":

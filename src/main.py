@@ -18,38 +18,29 @@ def spawn():
             w.data[row][col] = doodle()
             doodleCount += 1
 
+def moveObj(row_new, col_new, row_old, col_old):
+    w.data[row_new][col_new] = w.data[row_old][col_old]
+    w.data[row_new][col_new].move()
+    w.data[row_new][col_new].incrementBreedCounter()
+    w.data[row_old][col_old] = " . " 
+    breed(row_new, col_new)
+
 def move(row, col):
     if w.data[row][col] != " . " and w.data[row][col].didMove() == False:
         # 1=right, 2=down, 3=left, 4=up
         whichWay = r.randint(1,4)
         if whichWay == 1:
             if col < w.size - 1 and w.data[row][col+1] == " . ":
-                w.data[row][col+1] = w.data[row][col]
-                w.data[row][col+1].move()
-                w.data[row][col+1].incrementBreedCounter()
-                w.data[row][col] = " . " 
-                breed(row, col+1)
+                moveObj(row, col+1, row, col)
         elif whichWay == 2:
             if row < w.size - 1 and w.data[row+1][col] == " . ":
-                w.data[row+1][col] = w.data[row][col]
-                w.data[row+1][col].move()
-                w.data[row+1][col].incrementBreedCounter()
-                w.data[row][col] = " . " 
-                breed(row+1, col)
+                moveObj(row+1, col, row, col)
         elif whichWay == 3:
             if col > 0 and w.data[row][col-1] == " . ":
-                w.data[row][col-1] = w.data[row][col]
-                w.data[row][col-1].move()
-                w.data[row][col-1].incrementBreedCounter()
-                w.data[row][col] = " . " 
-                breed(row, col-1)
+                moveObj(row, col-1, row, col)
         elif whichWay == 4:
             if row > 0 and w.data[row-1][col] == " . ":
-                w.data[row-1][col] = w.data[row][col]
-                w.data[row-1][col].move()
-                w.data[row-1][col].incrementBreedCounter()
-                w.data[row][col] = " . " 
-                breed(row-1, col)
+                moveObj(row-1, col, row, col)
 
 def breed(row, col):
     if w.data[row][col].shouldBreed() == True:

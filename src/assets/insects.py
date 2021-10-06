@@ -36,6 +36,17 @@ class doodle(insect):
         self.type = " D "
         self.moved = moved
         self.breedCounter = 0
+        self.starveCounter = 0
 
     def shouldBreed(self):
         return self.breedCounter == 8
+
+    def shouldStarve(self):
+        return self.starveCounter == 3
+
+    def incrementStarveCounter(self):
+        self.starveCounter += 1
+
+    def resetStarveCounter(self):
+        self.starveCounter = 0
+        

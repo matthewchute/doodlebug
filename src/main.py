@@ -22,24 +22,37 @@ def moveObj(row_new, col_new, row_old, col_old):
     w.data[row_new][col_new] = w.data[row_old][col_old]
     w.data[row_new][col_new].move()
     w.data[row_new][col_new].incrementBreedCounter()
+    if w.data[row_new][col_new].getType() == " D ":
+        w.data[row_new][col_new].incrementStarveCounter()
     w.data[row_old][col_old] = " . " 
     breed(row_new, col_new)
+    return False
+
+def restObj(row, col):
+    w.data[row][col].move()
+    w.data[row][col].incrementBreedCounter()
+    if w.data[row][col].getType() == " D ":
+        w.data[row][col].incrementStarveCounter()
+    breed(row, col)
 
 def moveAnt(row, col):
+    resting = True
     # 1=right, 2=down, 3=left, 4=up
     whichWay = r.randint(1,4)
     if whichWay == 1:
         if col < w.size - 1 and w.data[row][col+1] == " . ":
-            moveObj(row, col+1, row, col)
+            resting = moveObj(row, col+1, row, col)
     elif whichWay == 2:
         if row < w.size - 1 and w.data[row+1][col] == " . ":
-            moveObj(row+1, col, row, col)
+            resting = moveObj(row+1, col, row, col)
     elif whichWay == 3:
         if col > 0 and w.data[row][col-1] == " . ":
-            moveObj(row, col-1, row, col)
+            resting = moveObj(row, col-1, row, col)
     elif whichWay == 4:
         if row > 0 and w.data[row-1][col] == " . ":
-            moveObj(row-1, col, row, col)
+            resting = moveObj(row-1, col, row, col)
+    if resting:
+        restObj(row, col)
 
 def moveDoodle(row, col):
     if w.data[row][col].shouldStarve():

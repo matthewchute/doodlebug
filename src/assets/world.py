@@ -9,9 +9,6 @@ class world:
         print "Step Number: " + str(step)
         for i in range(self.size):
             for j in range(self.size):
-                if self.data[i][j] == " . ":
-                    print " . ",
-                else:
-                    print self.data[i][j].getType(),
+                print self.data[i][j],
             print ""
     

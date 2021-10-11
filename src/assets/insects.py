@@ -3,6 +3,9 @@ class insect:
         self.type = None 
         self.moved = False
         self.breedCounter = 0
+
+    def __repr__(self):
+        return self.getType()
     
     def getType(self):
         return self.type

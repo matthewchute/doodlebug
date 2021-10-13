@@ -16,6 +16,12 @@ class world:
     def addDoodle(self):
         self.numDoodle += 1
 
+    def removeAnt(self):
+        self.numAnts -= 1
+
+    def removeDoodle(self):
+        self.numDoodle -= 1
+
     def spawn(self):
         while self.numAnts < self.startingAnts:
             row = r.randint(0, self.size-1)

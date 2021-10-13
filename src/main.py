@@ -42,6 +42,7 @@ def moveAnt(row, col):
 
 def moveDoodle(row, col):
     if w.data[row][col].shouldStarve():
+        w.removeDoodle()
         w.data[row][col] = " . "
     else:
         moveAnt(row,col)
@@ -73,8 +74,10 @@ def breed(row, col):
 
 def breedWhich(obj):
     if obj.getType() == " A ":
+        w.addAnt()
         return ant(moved = True)
     else:
+        w.addDoodle()
         return doodle(moved = True)
         
 def reset():

@@ -32,6 +32,8 @@ class world:
     
     def printWorld(self, step):
         print "Step Number: " + str(step)
+        print "# of Ants: " + str(self.numAnts) + "   |   ",
+        print "# of Doodlebugs: " + str(self.numDoodle)
         for i in range(self.size):
             for j in range(self.size):
                 print self.data[i][j],

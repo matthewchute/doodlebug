@@ -18,12 +18,15 @@ def spawn():
             w.data[row][col] = doodle()
             doodleCount += 1
 
+def checkIfStarve(row, col):
+    if w.data[row][col].getType() == " D ":
+        w.data[row][col].incrementStarveCounter()
+
 def moveObj(row_new, col_new, row_old, col_old):
     w.data[row_new][col_new] = w.data[row_old][col_old]
     w.data[row_new][col_new].move()
     w.data[row_new][col_new].incrementBreedCounter()
-    if w.data[row_new][col_new].getType() == " D ":
-        w.data[row_new][col_new].incrementStarveCounter()
+    checkIfStarve(row_new, col_new)
     w.data[row_old][col_old] = " . " 
     breed(row_new, col_new)
     return False
@@ -31,8 +34,7 @@ def moveObj(row_new, col_new, row_old, col_old):
 def restObj(row, col):
     w.data[row][col].move()
     w.data[row][col].incrementBreedCounter()
-    if w.data[row][col].getType() == " D ":
-        w.data[row][col].incrementStarveCounter()
+    checkIfStarve(row, col)
     breed(row, col)
 
 def moveAnt(row, col):
